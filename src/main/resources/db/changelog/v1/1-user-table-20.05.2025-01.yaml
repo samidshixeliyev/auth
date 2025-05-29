@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-users-table
+      author: samid_shixaliyev
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: username
+                  type: NVARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: password
+                  type: NVARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: email
+                  type: NVARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: enabled
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: DATETIME
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+              - column:
+                  name: updated_at
+                  type: DATETIME
+                  defaultValueComputed: CURRENT_TIMESTAMP

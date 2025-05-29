@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4-insert-default-roles
+      author: samid_shixaliyev
+      changes:
+        - sqlFile:
+            path: ../data/insert_updated_roles.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

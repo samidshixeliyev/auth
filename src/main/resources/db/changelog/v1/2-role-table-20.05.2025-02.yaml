@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2-add-unique-constraint-to-role-name
+      author: samid_shixaliyev
+      changes:
+        - addUniqueConstraint:
+            tableName: roles
+            columnNames: name

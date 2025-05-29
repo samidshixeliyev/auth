@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 6-insert-default-users
+      author: samid_shixaliyev
+      changes:
+        - sqlFile:
+            path: ../data/insert_first_user.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

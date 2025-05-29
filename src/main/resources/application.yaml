@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: Auth
+  liquibase:
+    change-log: classpath:/db/changelog/changelog-master.yaml
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/auth}
+    username: ${SPRING_DATASOURCE_USERNAME:user}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8082
+security:
+  jwt:
+    secret-key:
+      access-key: "1qedwP8bp53caDuUEFC45664SfG0Zt2S564fVqZlq45FdUw9sFLmx4XnShamaxi4Ixf5JpP1UrDcfMU9f1RjhkPMfTcGHBpeOFoymOZ81ITbfxOSeJFovc1kSToPcUHknMP3ReoEQ5q"
+      refresh-key: "qwedqP8bp53caDuUEF5654CSfG0Zt2SfVqZlq45Fd565Uw9sFLmx4Xnq4fVGoycay35464Ixf5JpP1UrDcfMU9f1RjhkPMfTIsmayilliymOZ81ITbfxOSeJFovc1kSToPcUHknMP3ReoEQ65"
+    access-token-expiration: 43200000 #120,000 #10 hours
+    refresh-token-expiration: 432000000 #360,000 #5 days
+
