@@ -19,15 +19,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                 .body(ErrorResponse.builder()
                         .code(ex.getCode())
                         .message(ex.getMessage() + " bu ise her zaman custom exceptiondir")
-                        .url(request.getContextPath())
+                        .url(request.getRequestURI())
                         .build());
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleException(Exception ex,HttpServletRequest request) {
+        System.out.println("Exception occurred: " + ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.builder()
-                        .url(request.getContextPath())
                         .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .message(ex.getMessage() + " \n Burada yazilan umumi exception")
                         .build());

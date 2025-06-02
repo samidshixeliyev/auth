@@ -2,6 +2,7 @@ package ao.samid.auth.config;
 
 import ao.samid.auth.service.CustomUserDetailedService;
 import ao.samid.auth.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,6 +51,21 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling((exception) ->
+                        exception.accessDeniedHandler((request, response, accessDeniedException) -> {
+                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "{\n" +
+                                    "  \"message\": \"Access denied\",\n" +
+                                    "  \"code\": 403,\n" +
+                                    "  \"url\":"+request.getRequestURI() +
+                                    "}\n");
+                        })
+                                .authenticationEntryPoint((request, response, authException) -> {
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{\n" +
+                                    "  \"message\": \"Invalid token\",\n" +
+                                    "  \"code\": 403,\n" +
+                                    "  \"url\":"+request.getRequestURI() +
+                                    "}\n");
+                        }))
                 .logout(logout -> logout.logoutUrl("/api/auth/logout"));
 
         return http.build();
