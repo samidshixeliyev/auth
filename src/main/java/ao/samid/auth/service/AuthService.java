@@ -131,4 +131,34 @@ public class AuthService {
                         .build());
 
     }
+    public void isEditableUser(String token) {
+        if (!jwtTokenService.isValidAccessToken(token)) {
+            throw CustomException
+                    .builder()
+                    .message("Access token is expired")
+                    .code(401)
+                    .build();
+        }
+
+        String username = jwtTokenService.getUsernameFromAccessToken(token);
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> CustomException
+                        .builder()
+                        .message("User not found")
+                        .code(404)
+                        .build());
+
+        boolean hasPermission = user.getRoles().stream()
+                .map(Role::getName) // Burada artıq name sahəsi alınır
+                .anyMatch(role -> role.equalsIgnoreCase("ADMIN") || role.equalsIgnoreCase("EDITOR"));
+
+        if (!hasPermission) {
+            throw CustomException
+                    .builder()
+                    .message("Access denied. Only ADMIN or EDITOR roles allowed.")
+                    .code(403)
+                    .build();
+        }
+    }
 }

@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-restart-users-identity
+      author: samid_shixaliyev
+
+      changes:
+        - sql:
+            dbms: postgresql
+            sql: |
+              ALTER TABLE users
+              ALTER COLUMN id
+              RESTART WITH 2;

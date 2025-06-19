@@ -41,8 +41,6 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.OK).build();
     }
-
-
     @PostMapping("/logout")
     public ResponseEntity<Void> logout() {
         authService.logout();
@@ -50,6 +48,12 @@ public class AuthController {
                 .status(HttpStatus.OK)
                 .build();
     }
-
+    @PostMapping("/check-permission")
+    public ResponseEntity<Void> editableUser(@RequestHeader("access-token") String token) {
+        authService.isEditableUser(token);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
 
 }

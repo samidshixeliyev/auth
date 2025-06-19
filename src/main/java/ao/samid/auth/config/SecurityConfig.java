@@ -36,13 +36,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
-                //Bu sorgularda authorization yoxlamiriq
+                //Bu sorgularda access token olmur yoxlamiriq
                 .authorizeHttpRequests(req -> req.requestMatchers(
                                 "/api/v1/auth/login/**",
                                 "/api/v1/auth/register",
                                 "/swagger-ui/**",
                                 "/v3/api-docs*/**",
-                        "api/v1/auth/access"
+                        "api/v1/auth/access",
+                        "api/v1/auth/refresh"
                         )
                         .permitAll()
                         .anyRequest()
@@ -93,6 +94,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
 }

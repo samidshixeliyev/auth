@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/auth/user")
 @RequiredArgsConstructor
 public class UserController implements Serializable {
     private final UserService userService;
@@ -27,11 +27,11 @@ public class UserController implements Serializable {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(id));
     }
     @PutMapping()
-    public ResponseEntity<UserResponse> updateUser(UserUpdateRequest request) {
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(request));
     }
     @PostMapping("/change-password")
-    public ResponseEntity<Void> changePassword(ChangePasswordRequest request) {
+    public ResponseEntity<Void> changePassword(@RequestBody ChangePasswordRequest request) {
         userService.changePassword(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -40,4 +40,5 @@ public class UserController implements Serializable {
         userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
 }

@@ -5,7 +5,7 @@ spring:
     change-log: classpath:/db/changelog/changelog-master.yaml
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/auth}
-    username: ${SPRING_DATASOURCE_USERNAME:user}
+    username: ${SPRING_DATASOURCE_USERNAME:auth_user}
     password: ${SPRING_DATASOURCE_PASSWORD:password}
     driver-class-name: org.postgresql.Driver
   jpa:

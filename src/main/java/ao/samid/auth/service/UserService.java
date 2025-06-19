@@ -108,8 +108,15 @@ public class UserService  {
                 .build();
     }
     public void changePassword(ChangePasswordRequest request) {
+        if(request.getOldPassword().equals(request.getNewPassword())){
+            throw CustomException.builder()
+                    .message("New password must be different from the old password")
+                    .code(400)
+                    .build();
+        }
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(UserNotFoundException::of);
+
         if (passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
             userRepository.save(user);
