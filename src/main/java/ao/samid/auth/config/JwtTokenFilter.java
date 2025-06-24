@@ -54,6 +54,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         String authorization = request.getHeader("Authorization");
         String path = request.getRequestURI();
+        if(path.contains("swagger")  || path.contains("api-docs")){
+            filterChain.doFilter(request, response);
+            return;
+        }
         if(path.equals("/api/v1/auth/login") || path.equals("/api/v1/auth/register")
                 || path.equals("/api/v1/auth/refresh")
                 || path.equals("/api/v1/auth/access")

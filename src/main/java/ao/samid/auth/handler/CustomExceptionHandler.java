@@ -1,5 +1,6 @@
 package ao.samid.auth.handler;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 
 @RestControllerAdvice
+@Hidden
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<Object> handleCustomException(CustomException ex,HttpServletRequest request) { //HttpServletRequest request bu userin frontdan gonderdiyi requestdir

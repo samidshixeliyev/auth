@@ -36,14 +36,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
-                //Bu sorgularda access token olmur yoxlamiriq
+                //Bu url-lərə sorgularda access token olmur və yoxlamiriq
                 .authorizeHttpRequests(req -> req.requestMatchers(
                                 "/api/v1/auth/login/**",
                                 "/api/v1/auth/register",
                                 "/swagger-ui/**",
                                 "/v3/api-docs*/**",
                         "api/v1/auth/access",
-                        "api/v1/auth/refresh"
+                        "api/v1/auth/refresh",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**"
                         )
                         .permitAll()
                         .anyRequest()
@@ -77,13 +79,13 @@ public class SecurityConfig {
     // hansi iplerin hansi resource elcatanligi burada teyin olunur
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
-        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        configuration.setAllowedOriginPatterns(Collections.singletonList("*"));//bu iplerdir
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));//bu metodlardir
+        configuration.setAllowedHeaders(Collections.singletonList("*"));// luboy headerle gelmek olar
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/**", configuration);  // bu ise urlleri yoxlar
         return source;
     }
     @Bean

@@ -27,3 +27,10 @@ security:
     access-token-expiration: 43200000 #120,000 #10 hours
     refresh-token-expiration: 432000000 #360,000 #5 days
 
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui/index.html
